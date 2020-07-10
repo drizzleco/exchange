@@ -1,6 +1,8 @@
 import random
 import datetime
+from schema import schema
 from config import DEBUG
+from flask_graphql import GraphQLView
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -99,6 +101,17 @@ def logout():
     """Log user out"""
     logout_user()
     return jsonify(message="Successfully logged out"), 200
+
+
+# GraphQl route config
+def graphql_view():
+    view = GraphQLView.as_view(
+        "graphql", schema=schema, context={"session": db.session}, graphiql=True
+    )
+    return login_required(view)
+
+
+app.add_url_rule("/graphql", view_func=graphql_view())
 
 
 @app.route("/", methods=["GET"])

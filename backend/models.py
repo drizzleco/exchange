@@ -41,7 +41,7 @@ class Auction(db.Model):
     """
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, unique=True, nullable=False)
     description = db.Column(db.String, nullable=False)
     starting_price = db.Column(db.Float, nullable=False)
     created = db.Column(db.DateTime, nullable=False)
@@ -61,6 +61,14 @@ class Auction(db.Model):
             "bids": [bid.to_dict() for bid in self.bids],
             "user_id": self.user_id,
         }
+
+    def get_current_price(self):
+        """
+        returns current price of auction(returns starting 
+        price or amount of highest bid)
+        """
+        highest_bid = sorted([bid.amount for bid in self.bids])[-1] if self.bids else 0
+        return max(self.starting_price, highest_bid)
 
 
 class Bid(db.Model):
