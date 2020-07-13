@@ -129,7 +129,6 @@ class CreateAuction(graphene.Mutation):
     def mutate(self, info, **args):
         auction = AuctionModel.query.filter_by(name=args.get("name")).first()
         if auction:
-            # check if an auction with the same name has been made already
             raise GraphQLError(
                 "Oops! An auction with name '{}' already exists!".format(
                     args.get("name")
@@ -137,7 +136,6 @@ class CreateAuction(graphene.Mutation):
             )
         end_time = toDateObj(args.get("end_time"))
         if end_time <= datetime.datetime.utcnow():
-            # make sure auctions can't end in the past
             raise GraphQLError("Your auction can't end in the past! LOL")
 
         auction = AuctionModel(
@@ -169,13 +167,10 @@ class CreateBid(graphene.Mutation):
     def mutate(self, info, **args):
         auction = AuctionModel.query.filter_by(id=args.get("auction_id")).first()
         if not auction:
-            # check if the auction actually exists
             raise GraphQLError("Oops! That auction was not found")
         if auction.user == current_user:
-            #  check if user is bidding on own auction
             raise GraphQLError("You can't bid on your own auction!!")
         if args.get("amount") <= auction.get_current_price():
-            # check that bid is higher than current price of auction
             raise GraphQLError(
                 "Your bid must be higher than the current price: "
                 + str(auction.get_current_price())
