@@ -16,7 +16,11 @@ from flask_login import (
 from models import db, User, Auction, Bid
 
 app = Flask(__name__)
-CORS(app)
+CORS(
+    app,
+    resources={r"/*": {"origins": ["http://localhost:8080", "http://127.0.0.1:8080"]}},
+    supports_credentials=True,
+)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///exchange.sqlite"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "".join([chr(random.randint(65, 92)) for _ in range(50)])
@@ -132,14 +136,18 @@ if __name__ == "__main__":
         a1 = Auction(
             name="test auction",
             description="test desc",
-            starting_price=150.05,
+            starting_price=99.99,
             created=datetime.datetime.utcnow(),
-            end_time=datetime.datetime(2020, 8, 8, 7, 43),
+            end_time=datetime.datetime(2020, 7, 15, 7, 43),
+            user=u1,
         )
-        b1 = Bid(amount=100.01, created=datetime.datetime.utcnow())
-        a1.bids.append(b1)
-        u1.auctions.append(a1)
-        u1.bids.append(b1)
+        b1 = Bid(
+            amount=100.01,
+            created=datetime.datetime(2020, 7, 13, 7, 43),
+            user=u1,
+            auction=a1,
+        )
+        b2 = Bid(amount=220, created=datetime.datetime.utcnow(), user=u1, auction=a1,)
         db.session.add(u1)
         db.session.commit()
     app.run(debug=DEBUG)
