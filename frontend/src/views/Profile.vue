@@ -31,6 +31,10 @@ import { getUser } from "@/helpers";
 import Bid from "@/components/Bid";
 import AuctionPreview from "@/components/AuctionPreview";
 
+/**
+ * Profile view
+ * Shows you all your auctions and bids
+ */
 export default {
   name: "Profile",
   components: {

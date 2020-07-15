@@ -1,5 +1,11 @@
 import axios from 'axios'
 
+/**
+ * Generic axios POST request
+ * @param {string} path path to send request to
+ * @param {Object} data data to send 
+ * @returns {Promise}   axios Promise
+ */
 export function post(path, data) {
     return axios
         .post("http://localhost:5000/" + path, data, {
@@ -7,15 +13,23 @@ export function post(path, data) {
         })
 }
 
+/**
+ * Generic GraphQL query
+ * @param {string} query GraphQL query to send
+ * @param {Object} vars GraphQL variables, if necessary
+ * @returns {Promise}   axios Promise
+ */
 function graphql(query, vars = {}) {
     return post("graphql", {
         query: query,
         variables: vars
-    }, {
-        withCredentials: true
     })
 }
 
+/**
+ * GraphQL query to get all auctions
+ * @returns {Promise}   axios Promise
+ */
 export function getAuctions() {
     return graphql(`
     {
@@ -42,6 +56,11 @@ export function getAuctions() {
     `)
 }
 
+/**
+ * GraphQL query to get info for an Auction
+ * @param {string|number} id id of Auction to retrieve
+ * @returns {Promise} axios Promise
+ */
 export function getAuction(id) {
     return graphql(`
         query auction($id: Int) {
@@ -70,6 +89,12 @@ export function getAuction(id) {
     })
 }
 
+/**
+ * GraphQL mutation to create Bid for an Auction
+ * @param {string|number} auction_id id of Auction to create Bid for
+ * @param {number} amount amount of Bid
+ * @returns {Promise}     axios Promise
+ */
 export function createBid(auction_id, amount) {
     return graphql(`
         mutation newBid($auctionId: Int!, $amount: Float!) {
@@ -94,6 +119,14 @@ export function createBid(auction_id, amount) {
     })
 }
 
+/**
+ * GraphQL mutation to create a new Auction
+ * @param {string} name name of Auction
+ * @param {string} description description of Auction
+ * @param {float} startingPrice starting price of Auction
+ * @param {string} endTime end time of Auction in format "yyyy-mm-dd hh:mm"
+ * @returns {Promise}   axios Promise
+ */
 export function createAuction(name, description, startingPrice, endTime) {
     return graphql(`
     mutation newAuction($name: String!, $description: String!, $startingPrice: Float!, $endTime: String!) {
@@ -112,6 +145,11 @@ export function createAuction(name, description, startingPrice, endTime) {
     })
 }
 
+/**
+ * GraphQL query to get info for a user
+ * @param {string} username username of user to get
+ * @returns {Promise}  axios Promise
+ */
 export function getUser(username) {
     return graphql(`
     query user($username: String) {
@@ -160,6 +198,12 @@ export function getUser(username) {
     })
 }
 
+/**
+ * Set a cookie(with an expiration) to a value
+ * @param {string} name name of cookie
+ * @param {string} value value to set
+ * @param {number} days number of days till cookie's expiration
+ */
 export function setCookie(name, value, days) {
     var expires = "";
     if (days) {
@@ -170,20 +214,39 @@ export function setCookie(name, value, days) {
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
+/**
+ * Get value of cookie from browser
+ * @param {string} name name of cookie to retrieve
+ * @returns {string}    value of cookie
+ */
 export function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
+/**
+ * Check if cookie exists
+ * @param {string} name name of cookie to check for
+ * @returns {number}    index of cookie if exists. returns -1 if not
+ */
 export function cookieExists(name) {
     return document.cookie.indexOf(name + '=');
 }
 
+/**
+ * Delete a cookie from browser
+ * @param {string} name name of cookie to delete
+ */
 export function eraseCookie(name) {
     document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
+/**
+ * Format a number of seconds to a nice string with days, hour, minute, and seconds
+ * @param {number} seconds seconds to format
+ * @returns {string}    formatted string(ex: 15 days, 22 hours, 35 minutes, 49 seconds)
+ */
 export function formatSeconds(seconds) {
     let d = Math.floor(seconds / (3600 * 24));
     let h = Math.floor(seconds % (3600 * 24) / 3600);
@@ -197,6 +260,11 @@ export function formatSeconds(seconds) {
     return dDisplay + hDisplay + mDisplay + sDisplay;
 }
 
+/**
+ * Convert a UTC date string to the user's respective locale
+ * @param {string} date_string date string to format
+ * @returns {string}    formatted locale string
+ */
 export function formatDate(date_string) {
     return new Date(date_string.split('.')[0] + 'Z').toLocaleString()
 }

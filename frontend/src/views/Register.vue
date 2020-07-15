@@ -54,6 +54,9 @@
 <script>
 import { post } from "@/helpers";
 
+/**
+ * Register view
+ */
 export default {
   name: "Register",
   data: () => {

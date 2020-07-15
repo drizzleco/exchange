@@ -50,6 +50,9 @@
 <script>
 import { createAuction } from "@/helpers";
 
+/**
+ * Create Auction view
+ */
 export default {
   name: "NewAuction",
   data: () => {

@@ -10,6 +10,10 @@
 <script>
 import { formatDate } from "@/helpers";
 
+/**
+ * Bid component
+ * Displays bid amount, username, and creation date
+ */
 export default {
   name: "Bid",
   props: ["bid"],

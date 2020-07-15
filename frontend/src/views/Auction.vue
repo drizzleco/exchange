@@ -43,6 +43,11 @@
 import { getAuction, createBid, formatSeconds, formatDate } from "@/helpers";
 import Bid from "@/components/Bid";
 
+/**
+ * Auction view
+ * Shows Auction details and a list of current Bids.
+ * Allows user to bid on Auction
+ */
 export default {
   name: "Auction",
   components: {
@@ -107,7 +112,6 @@ export default {
     },
     formatDate,
   },
-
   created() {
     this.init();
     this.countDown();

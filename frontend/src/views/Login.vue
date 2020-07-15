@@ -43,6 +43,9 @@
 <script>
 import { post, setCookie } from "@/helpers";
 
+/**
+ * Login view
+ */
 export default {
   name: "Login",
   data: () => {

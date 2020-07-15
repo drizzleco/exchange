@@ -50,6 +50,10 @@
 <script>
 import { getCookie, cookieExists, eraseCookie } from "./helpers";
 import axios from "axios";
+
+/**
+ * Main app layout
+ */
 export default {
   props: {
     source: String,

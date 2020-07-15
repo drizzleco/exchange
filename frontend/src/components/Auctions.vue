@@ -15,6 +15,10 @@
 import { getAuctions } from "@/helpers";
 import AuctionPreview from "./AuctionPreview";
 
+/**
+ * Auctions component
+ * Renders an AuctionPreview for each Auction passed in the auctions prop
+ */
 export default {
   name: "Auctions",
   components: {

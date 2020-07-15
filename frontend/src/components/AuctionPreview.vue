@@ -12,6 +12,11 @@
 </template>
 <script>
 import { formatDate } from "@/helpers";
+
+/**
+ * Auction Preview component.
+ * Clicking on me brings you to the Auction view
+ */
 export default {
   name: "AuctionPreview",
   props: ["auction"],

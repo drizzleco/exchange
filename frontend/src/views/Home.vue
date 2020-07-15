@@ -6,6 +6,10 @@
 // @ is an alias to /src
 import Auctions from "@/components/Auctions.vue";
 
+/**
+ * Home view
+ * You see this right after logging in or registering
+ */
 export default {
   name: "Home",
   components: {
