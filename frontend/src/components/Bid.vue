@@ -2,7 +2,7 @@
   <v-card class="my-3">
     <v-card-title> ${{ bid.amount }} </v-card-title>
     <v-card-subtitle>
-      Bid by: {{ bid.user.username }} at: {{ formatDate(bid.created) }}
+      Bid by: {{ bid.user.username }} at {{ formatDate(bid.created) }}
     </v-card-subtitle>
   </v-card>
 </template>
