@@ -1,7 +1,7 @@
 import random
 import datetime
 from schema import schema
-from config import DEBUG
+from config import DEBUG, ORIGINS
 from flask_graphql import GraphQLView
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -18,7 +18,7 @@ from models import db, User, Auction, Bid
 app = Flask(__name__)
 CORS(
     app,
-    resources={r"/*": {"origins": ["http://localhost:8080", "http://127.0.0.1:8080"]}},
+    resources={r"/*": {"origins": ORIGINS}},
     supports_credentials=True,
 )
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///exchange.sqlite"
@@ -138,7 +138,7 @@ if __name__ == "__main__":
             description="test desc",
             starting_price=99.99,
             created=datetime.datetime.utcnow(),
-            end_time=datetime.datetime(2020, 7, 15, 19, 12, 30),
+            end_time=datetime.datetime(2020, 7, 15, 22, 59, 30),
             user=u1,
         )
         b1 = Bid(
