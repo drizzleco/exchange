@@ -94,6 +94,71 @@ export function createBid(auction_id, amount) {
     })
 }
 
+export function createAuction(name, description, startingPrice, endTime) {
+    return graphql(`
+    mutation newAuction($name: String!, $description: String!, $startingPrice: Float!, $endTime: String!) {
+        createAuction(name: $name, description: $description, startingPrice: $startingPrice, endTime: $endTime) {
+            auction {
+                id
+            }
+            message
+        }
+    }
+    `, {
+        name: name,
+        description: description,
+        startingPrice: startingPrice,
+        endTime: endTime
+    })
+}
+
+export function getUser(username) {
+    return graphql(`
+    query user($username: String) {
+        users(username: $username) {
+            id
+            username
+            auctions {
+                id
+                name
+                startingPrice
+                description
+                created
+                endTime
+                user {
+                    username
+                }
+                bids {
+                    id
+                    amount
+                    created
+                    user {
+                        username
+                    }
+                }
+            }
+            bids {
+                id
+                amount
+                created
+                auction {
+                    id
+                    name
+                    user {
+                        username
+                    }
+                }
+                user {
+                    username
+                }
+            }
+        }
+    }
+
+    `, {
+        username: username
+    })
+}
 
 export function setCookie(name, value, days) {
     var expires = "";

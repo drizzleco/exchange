@@ -138,7 +138,7 @@ if __name__ == "__main__":
             description="test desc",
             starting_price=99.99,
             created=datetime.datetime.utcnow(),
-            end_time=datetime.datetime(2020, 7, 15, 7, 43),
+            end_time=datetime.datetime(2020, 7, 15, 19, 12, 30),
             user=u1,
         )
         b1 = Bid(

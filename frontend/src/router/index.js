@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import Auction from '@/views/Auction.vue'
+import NewAuction from '@/views/NewAuction.vue'
+import Profile from '@/views/Profile.vue'
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
 
@@ -16,6 +18,16 @@ const routes = [{
     path: '/auction/:id',
     name: 'Auction',
     component: Auction
+  },
+  {
+    path: '/new',
+    name: 'NewAuction',
+    component: NewAuction
+  },
+  {
+    path: '/me',
+    name: 'Profile',
+    component: Profile
   },
   {
     path: '/login',

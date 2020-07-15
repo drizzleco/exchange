@@ -1,7 +1,7 @@
 <template>
   <v-row align="center" justify="center">
     <v-col cols="12" sm="8" md="4">
-      <h1 align="center">Active Auctions</h1>
+      <h1 align="center">Auctions</h1>
       <AuctionPreview
         v-for="auction in auctions"
         :key="auction.id"

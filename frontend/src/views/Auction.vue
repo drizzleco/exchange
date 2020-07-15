@@ -7,12 +7,12 @@
         Created by: <strong>{{ auction.user.username }}</strong> at
         {{ formatDate(auction.created) }}
       </h3>
-      <h3>Ending in: {{ formattedSecondsLeft }}</h3>
-      <h3>Ends on: {{ formatDate(auction.endTime) }}</h3>
+      <h3 v-if="!ended">Ending in: {{ formattedSecondsLeft }}</h3>
+      <h3>End{{ ended ? "ed" : "s" }} on: {{ formatDate(auction.endTime) }}</h3>
       <h3>Starting Price: ${{ auction.startingPrice }}</h3>
       <h2 class="mt-5">Bids:</h2>
       <h4>Total Bids: {{ auction.bids.length }}</h4>
-      <v-row class="d-flex mt-3">
+      <v-row v-if="!ended" class="d-flex mt-3">
         <v-text-field
           outlined
           rounded
@@ -26,6 +26,13 @@
           placeholder="Bid Amount"
         />
         <v-btn class="ma-3" @click="handleBid">Bid!</v-btn>
+      </v-row>
+      <v-row v-if="ended">
+        <h1>
+          WINNER: {{ this.auction.bids[0].user.username }} (${{
+            this.auction.bids[0].amount
+          }})
+        </h1>
       </v-row>
       <Bid v-for="bid in auction.bids" :key="bid.id" :bid="bid"></Bid>
     </v-col>
@@ -49,15 +56,17 @@ export default {
       bidAmount: "",
       bidError: "",
       bidSuccess: "",
+      ended: false,
     };
   },
   methods: {
     init: function() {
       getAuction(this.$route.params.id).then((response) => {
         let auction = response.data.data.auctions[0];
+        let auctionEndTime = new Date(auction.endTime + "Z");
         this.auction = auction;
         this.secondsLeft =
-          (new Date(auction.endTime).getTime() - new Date().getTime()) / 1000;
+          (auctionEndTime.getTime() - new Date().getTime()) / 1000;
         this.auction.bids.sort(function(a, b) {
           // sort bids by most recent first
           var keyA = new Date(a.created),
@@ -75,7 +84,7 @@ export default {
           this.formattedSecondsLeft = formatSeconds(this.secondsLeft);
           this.countDown();
         }, 1000);
-      }
+      } else this.ended = true;
     },
     handleBid: function() {
       if (!this.bidAmount) {
@@ -83,10 +92,12 @@ export default {
         return;
       }
       createBid(this.$route.params.id, this.bidAmount)
-        .then((data) => {
-          this.bidError = data.data.errors ? data.data.errors[0].message : "";
-          this.bidSuccess = data.data.data
-            ? data.data.data.createBid.message
+        .then((response) => {
+          this.bidError = response.data.errors
+            ? response.data.errors[0].message
+            : "";
+          this.bidSuccess = response.data.data
+            ? response.data.data.createBid.message
             : "";
           this.init(); // refresh
         })
@@ -97,7 +108,7 @@ export default {
     formatDate,
   },
 
-  mounted() {
+  created() {
     this.init();
     this.countDown();
   },

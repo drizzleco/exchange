@@ -72,6 +72,7 @@ export default {
       if (this.$store.state.loggedIn)
         return [
           { title: "Home", href: "/", icon: "mdi-home-outline" },
+          { title: "New Auction", href: "/new", icon: "mdi-clipboard-plus" },
           { title: "My Profile", href: "/me", icon: "mdi-account-circle" },
         ];
       else

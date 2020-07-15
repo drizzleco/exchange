@@ -44,6 +44,7 @@
 import { post, setCookie } from "@/helpers";
 
 export default {
+  name: "Login",
   data: () => {
     return {
       username: "",

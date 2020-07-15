@@ -1,5 +1,5 @@
 <template>
-  <v-card :to="'/auction/' + auction.id">
+  <v-card class="my-3" :to="'/auction/' + auction.id">
     <v-card-title>{{ auction.name }}</v-card-title>
     <v-card-subtitle>{{ auction.description }}</v-card-subtitle>
     <v-card-text

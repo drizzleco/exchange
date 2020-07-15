@@ -55,6 +55,7 @@
 import { post } from "@/helpers";
 
 export default {
+  name: "Register",
   data: () => {
     return {
       username: "",
