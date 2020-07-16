@@ -293,3 +293,16 @@ export function formatMoney(number) {
 
     return formatter.format(number);
 }
+
+/**
+ * Sorter function to sort two dates by most recent
+ * @param {string} a first date string to compare
+ * @param {string} b second date string to compare
+ */
+export function byMostRecent(a, b) {
+    var keyA = new Date(a.created),
+        keyB = new Date(b.created);
+    if (keyA < keyB) return 1;
+    if (keyA > keyB) return -1;
+    return 0;
+}

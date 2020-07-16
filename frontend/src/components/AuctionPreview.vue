@@ -1,19 +1,35 @@
 <template>
   <v-card class="my-3" :to="'/auction/' + auction.id">
-    <v-card-title>{{ auction.name }}</v-card-title>
-    <v-card-subtitle>{{ auction.description }}</v-card-subtitle>
+    <v-card-title>
+      <h1>{{ auction.name }}</h1>
+    </v-card-title>
+    <v-card-subtitle>
+      <h2>{{ auction.description }}</h2>
+    </v-card-subtitle>
     <v-card-text>
-      <span>
-        Created by: {{ auction.user.username }} at
+      <h3>
+        Created by: <strong>{{ auction.user.username }}</strong> at
         {{ formatDate(auction.created) }}
-      </span>
-      <span>Ends at: {{ formatDate(auction.endTime) }}</span>
-      <span>Bids: {{ auction.bids.length }}</span>
+      </h3>
+      <h3 v-if="!ended">Ending in: {{ formattedSecondsLeft }}</h3>
+      <h3>End{{ ended ? "ed" : "s" }} on: {{ formatDate(auction.endTime) }}</h3>
+      <h3 v-if="ended">
+        WINNER: {{ auction.bids[0].user.username }} ({{
+          formatMoney(auction.bids[0].amount)
+        }})
+      </h3>
+      <h3>Starting Price: {{ formatMoney(auction.startingPrice) }}</h3>
+      <h3>Total Bids: {{ auction.bids.length }}</h3>
     </v-card-text>
   </v-card>
 </template>
 <script>
-import { formatDate } from "@/helpers";
+import {
+  formatDate,
+  formatSeconds,
+  formatMoney,
+  byMostRecent,
+} from "@/helpers";
 
 /**
  * Auction Preview component.
@@ -22,14 +38,29 @@ import { formatDate } from "@/helpers";
 export default {
   name: "AuctionPreview",
   props: ["auction"],
+  data: function() {
+    return {
+      secondsLeft: 1,
+      formattedSecondsLeft: "",
+      ended: false,
+    };
+  },
   methods: {
+    countDown: function() {
+      if (this.secondsLeft >= 1) {
+        this.secondsLeft -= 1;
+        this.formattedSecondsLeft = formatSeconds(this.secondsLeft);
+      } else this.ended = true;
+    },
     formatDate,
+    formatMoney,
+  },
+  created() {
+    this.auction.bids.sort(byMostRecent);
+    let auctionEndTime = new Date(this.auction.endTime + "Z");
+    this.secondsLeft = (auctionEndTime.getTime() - new Date().getTime()) / 1000;
+    this.countDown();
+    setInterval(this.countDown, 1000);
   },
 };
 </script>
-
-<style lang="scss" scoped>
-span {
-  display: block;
-}
-</style>
