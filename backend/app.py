@@ -1,28 +1,25 @@
-import random
 import datetime
-from schema import schema
-from config import DEBUG, ORIGINS
-from flask_graphql import GraphQLView
+
+from config import DEBUG, ORIGINS, Config
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
+from flask_graphql import GraphQLView
 from flask_login import (
     LoginManager,
-    login_user,
-    logout_user,
     current_user,
     login_required,
+    login_user,
+    logout_user,
 )
-from models import db, User, Auction, Bid
+from flask_sqlalchemy import SQLAlchemy
+from models import Auction, Bid, User, db
+from schema import schema
 
 app = Flask(__name__)
 CORS(
     app, resources={r"/*": {"origins": ORIGINS}}, supports_credentials=True,
 )
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///exchange.sqlite"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SECRET_KEY"] = "".join([chr(random.randint(65, 92)) for _ in range(50)])
-
+app.config.from_object(Config)
 
 db.app = app
 db.init_app(app)

@@ -84,7 +84,7 @@ export default {
     },
   },
   created() {
-    if (cookieExists("username") > 0) {
+    if (cookieExists("username")) {
       this.$store.commit("setLoggedIn");
       this.$store.commit("setUsername", getCookie("username"));
     }

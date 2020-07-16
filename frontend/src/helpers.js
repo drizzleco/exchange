@@ -239,10 +239,10 @@ export function getCookie(name) {
 /**
  * Check if cookie exists
  * @param {string} name name of cookie to check for
- * @returns {number}    index of cookie if exists. returns -1 if not
+ * @returns {boolean}    true if cookie exists
  */
 export function cookieExists(name) {
-    return document.cookie.indexOf(name + '=');
+    return document.cookie.indexOf(name + '=') >= 0;
 }
 
 /**
