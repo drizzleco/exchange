@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    drawer: null,
     loggedIn: false,
     username: ''
   },
@@ -12,6 +13,9 @@ export default new Vuex.Store({
     loggedIn: state => state.loggedIn
   },
   mutations: {
+    toggleDrawer(state) {
+      state.drawer = !state.drawer
+    },
     setLoggedIn(state) {
       state.loggedIn = true
     },
