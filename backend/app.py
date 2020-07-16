@@ -17,9 +17,7 @@ from models import db, User, Auction, Bid
 
 app = Flask(__name__)
 CORS(
-    app,
-    resources={r"/*": {"origins": ORIGINS}},
-    supports_credentials=True,
+    app, resources={r"/*": {"origins": ORIGINS}}, supports_credentials=True,
 )
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///exchange.sqlite"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -138,7 +136,7 @@ if __name__ == "__main__":
             description="test desc",
             starting_price=99.99,
             created=datetime.datetime.utcnow(),
-            end_time=datetime.datetime(2020, 7, 15, 22, 59, 30),
+            end_time=datetime.datetime.utcnow() + datetime.timedelta(days=7),
             user=u1,
         )
         b1 = Bid(

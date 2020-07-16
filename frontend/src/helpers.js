@@ -1,4 +1,15 @@
 import axios from 'axios'
+import store from './store'
+import router from './router'
+
+const apiUrl = "http://localhost:5000/"
+
+/**
+ * Redirects to home route if user is already logged in
+ */
+export function redirectIfLoggedIn() {
+    if (store.getters.loggedIn) router.push("/");
+}
 
 /**
  * Generic axios POST request
@@ -8,7 +19,7 @@ import axios from 'axios'
  */
 export function post(path, data) {
     return axios
-        .post("http://localhost:5000/" + path, data, {
+        .post(apiUrl + path, data, {
             withCredentials: true
         })
 }
@@ -267,4 +278,18 @@ export function formatSeconds(seconds) {
  */
 export function formatDate(date_string) {
     return new Date(date_string.split('.')[0] + 'Z').toLocaleString()
+}
+
+/**
+ * Covert a number to USD currency string
+ * @param {number} number number to format
+ * @returns {string}    USD formatted string
+ */
+export function formatMoney(number) {
+    var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
+
+    return formatter.format(number);
 }

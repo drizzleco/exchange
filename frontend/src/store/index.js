@@ -8,6 +8,9 @@ export default new Vuex.Store({
     loggedIn: false,
     username: ''
   },
+  getters: {
+    loggedIn: state => state.loggedIn
+  },
   mutations: {
     setLoggedIn(state) {
       state.loggedIn = true

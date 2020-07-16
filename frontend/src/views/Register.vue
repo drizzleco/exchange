@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { post } from "@/helpers";
+import { post, redirectIfLoggedIn } from "@/helpers";
 
 /**
  * Register view
@@ -88,7 +88,7 @@ export default {
     },
   },
   created() {
-    if (this.$store.state.loggedIn) this.$router.push("/");
+    redirectIfLoggedIn();
   },
 };
 </script>

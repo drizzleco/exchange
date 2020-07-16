@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { post, setCookie } from "@/helpers";
+import { post, setCookie, redirectIfLoggedIn } from "@/helpers";
 
 /**
  * Login view
@@ -75,7 +75,7 @@ export default {
     },
   },
   created() {
-    if (this.$store.state.loggedIn) this.$router.push("/");
+    redirectIfLoggedIn();
   },
 };
 </script>

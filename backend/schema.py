@@ -127,17 +127,10 @@ class CreateAuction(graphene.Mutation):
     message = graphene.String()
 
     def mutate(self, info, **args):
-        auction = AuctionModel.query.filter_by(name=args.get("name")).first()
         name = args.get("name")
         description = args.get("description")
         if not name or not description:
             raise GraphQLError("Name/Description cannot be blank!")
-        if auction:
-            raise GraphQLError(
-                "Oops! An auction with name '{}' already exists!".format(
-                    args.get("name")
-                )
-            )
         end_time = toDateObj(args.get("end_time"))
         if end_time <= datetime.datetime.utcnow():
             raise GraphQLError("Your auction can't end in the past! LOL")

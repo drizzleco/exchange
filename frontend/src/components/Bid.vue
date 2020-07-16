@@ -1,6 +1,6 @@
 <template>
   <v-card class="my-3">
-    <v-card-title> ${{ bid.amount }} </v-card-title>
+    <v-card-title> {{ formatMoney(bid.amount) }} </v-card-title>
     <v-card-subtitle>
       Bid by: {{ bid.user.username }} at {{ formatDate(bid.created) }}
     </v-card-subtitle>
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { formatDate } from "@/helpers";
+import { formatDate, formatMoney } from "@/helpers";
 
 /**
  * Bid component
@@ -19,6 +19,7 @@ export default {
   props: ["bid"],
   methods: {
     formatDate,
+    formatMoney,
   },
 };
 </script>

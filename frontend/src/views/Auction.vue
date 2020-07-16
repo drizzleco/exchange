@@ -7,9 +7,10 @@
         Created by: <strong>{{ auction.user.username }}</strong> at
         {{ formatDate(auction.created) }}
       </h3>
+      <!-- TODO: merge with aution preview component -->
       <h3 v-if="!ended">Ending in: {{ formattedSecondsLeft }}</h3>
       <h3>End{{ ended ? "ed" : "s" }} on: {{ formatDate(auction.endTime) }}</h3>
-      <h3>Starting Price: ${{ auction.startingPrice }}</h3>
+      <h3>Starting Price: {{ formatMoney(auction.startingPrice) }}</h3>
       <h2 class="mt-5">Bids:</h2>
       <h4>Total Bids: {{ auction.bids.length }}</h4>
       <v-row v-if="!ended" class="d-flex mt-3">
@@ -40,7 +41,13 @@
 </template>
 
 <script>
-import { getAuction, createBid, formatSeconds, formatDate } from "@/helpers";
+import {
+  getAuction,
+  createBid,
+  formatSeconds,
+  formatDate,
+  formatMoney,
+} from "@/helpers";
 import Bid from "@/components/Bid";
 
 /**
@@ -111,6 +118,7 @@ export default {
         });
     },
     formatDate,
+    formatMoney,
   },
   created() {
     this.init();
