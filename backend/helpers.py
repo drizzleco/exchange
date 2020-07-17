@@ -11,4 +11,3 @@ def toDateObj(date_string: str) -> datetime:
         - datetime - coverted datetime object
     """
     return datetime.strptime(date_string, "%Y-%m-%d %H:%M")
-

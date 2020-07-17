@@ -1,28 +1,38 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <NavDrawer />
+    <AppBar />
+    <MainContent />
+    <Footer />
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NavDrawer from "@/components/nav/NavDrawer";
+import AppBar from "@/components/layout/AppBar";
+import MainContent from "@/components/layout/MainContent";
+import Footer from "@/components/layout/Footer";
+import { getCookie, cookieExists } from "@/helpers";
 
+/**
+ * Main app layout
+ */
 export default {
-  name: 'App',
+  props: {
+    source: String,
+  },
   components: {
-    HelloWorld
-  }
-}
+    NavDrawer,
+    AppBar,
+    MainContent,
+    Footer,
+  },
+  created() {
+    if (cookieExists("username")) {
+      this.$store.commit("setLoggedIn");
+      this.$store.commit("setUsername", getCookie("username"));
+    }
+    this.$vuetify.theme.dark = true;
+  },
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

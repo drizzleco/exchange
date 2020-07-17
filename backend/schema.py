@@ -1,11 +1,15 @@
 import datetime
-from helpers import toDateObj
+
 import graphene
-from graphene import relay
-from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
-from graphql import GraphQLError
-from models import db, User as UserModel, Auction as AuctionModel, Bid as BidModel
 from flask_login import current_user
+from graphene import relay
+from graphene_sqlalchemy import SQLAlchemyConnectionField, SQLAlchemyObjectType
+from graphql import GraphQLError
+from helpers import toDateObj
+from models import Auction as AuctionModel
+from models import Bid as BidModel
+from models import User as UserModel
+from models import db
 
 
 class User(SQLAlchemyObjectType):
@@ -127,21 +131,21 @@ class CreateAuction(graphene.Mutation):
     message = graphene.String()
 
     def mutate(self, info, **args):
-        auction = AuctionModel.query.filter_by(name=args.get("name")).first()
-        if auction:
-            raise GraphQLError(
-                "Oops! An auction with name '{}' already exists!".format(
-                    args.get("name")
-                )
-            )
+        name = args.get("name")
+        description = args.get("description")
+        if not name or not description:
+            raise GraphQLError("Name/Description cannot be blank!")
         end_time = toDateObj(args.get("end_time"))
         if end_time <= datetime.datetime.utcnow():
             raise GraphQLError("Your auction can't end in the past! LOL")
+        starting_price = args.get("starting_price")
+        if starting_price < 0:
+            raise GraphQLError("Starting price can't be negative!")
 
         auction = AuctionModel(
-            name=args.get("name"),
-            description=args.get("description"),
-            starting_price=args.get("starting_price"),
+            name=name,
+            description=description,
+            starting_price=starting_price,
             created=datetime.datetime.utcnow(),
             end_time=end_time,
             user=current_user,

@@ -1,26 +1,25 @@
-import random
 import datetime
-from schema import schema
-from config import DEBUG
-from flask_graphql import GraphQLView
+
+from config import DEBUG, ORIGINS, Config
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
+from flask_graphql import GraphQLView
 from flask_login import (
     LoginManager,
-    login_user,
-    logout_user,
     current_user,
     login_required,
+    login_user,
+    logout_user,
 )
-from models import db, User, Auction, Bid
+from flask_sqlalchemy import SQLAlchemy
+from models import Auction, Bid, User, db
+from schema import schema
 
 app = Flask(__name__)
-CORS(app)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///exchange.sqlite"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SECRET_KEY"] = "".join([chr(random.randint(65, 92)) for _ in range(50)])
-
+CORS(
+    app, resources={r"/*": {"origins": ORIGINS}}, supports_credentials=True,
+)
+app.config.from_object(Config)
 
 db.app = app
 db.init_app(app)
@@ -122,24 +121,5 @@ def home():
 
 if __name__ == "__main__":
     if DEBUG:
-        db.drop_all()
-        db.create_all()
-
-        u1 = User(
-            username="test", email="test@gmail.com", created=datetime.datetime.utcnow(),
-        )
-        u1.set_password("test")
-        a1 = Auction(
-            name="test auction",
-            description="test desc",
-            starting_price=150.05,
-            created=datetime.datetime.utcnow(),
-            end_time=datetime.datetime(2020, 8, 8, 7, 43),
-        )
-        b1 = Bid(amount=100.01, created=datetime.datetime.utcnow())
-        a1.bids.append(b1)
-        u1.auctions.append(a1)
-        u1.bids.append(b1)
-        db.session.add(u1)
-        db.session.commit()
+        import tests
     app.run(debug=DEBUG)
