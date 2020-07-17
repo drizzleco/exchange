@@ -1,5 +1,6 @@
-from models import Auction, Bid, User, db
 import datetime
+
+from models import Auction, Bid, User, db
 
 db.drop_all()
 db.create_all()

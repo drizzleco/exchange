@@ -1,4 +1,5 @@
-import random, os
+import os
+import random
 
 DEBUG = True
 PORT = os.getenv("PORT") or 8080
