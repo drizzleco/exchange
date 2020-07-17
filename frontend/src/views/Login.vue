@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     submit: function() {
-      post("login", {
+      post("/login", {
         username: this.username,
         password: this.password,
       })

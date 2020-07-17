@@ -19,7 +19,11 @@
 
 <script>
 import NavItem from "./NavItem";
+<<<<<<< HEAD
 import { eraseCookie } from "@/helpers";
+=======
+import { eraseCookie, apiUrl } from "@/helpers";
+>>>>>>> 5742407... update
 import axios from "axios";
 
 /**
@@ -32,7 +36,11 @@ export default {
   },
   methods: {
     logout: function() {
+<<<<<<< HEAD
       axios.delete("http://localhost:5000/logout").then(() => {
+=======
+      axios.delete(apiUrl + "/logout").then(() => {
+>>>>>>> 5742407... update
         this.$store.commit("setLoggedOut");
         this.$store.commit("setUsername", "");
         eraseCookie("username");

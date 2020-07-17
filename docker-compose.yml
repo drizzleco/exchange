@@ -1,0 +1,8 @@
+version: '3'
+services:
+  web:
+    build: .
+    environment:
+      - PORT=8765
+    ports:
+      - "8007:8765"
