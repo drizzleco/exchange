@@ -12,10 +12,10 @@
 2. `make start`
 
 ## Docker
-To run a local copy of the code, run the following 
+To run a local copy of the code, run the following
 
 ```bash
-docker-compose up
+docker-compose up -d
 ```
 
 ## Usage
