@@ -19,7 +19,7 @@
 
 <script>
 import NavItem from "./NavItem";
-import { eraseCookie } from "@/helpers";
+import { eraseCookie, apiUrl } from "@/helpers";
 import axios from "axios";
 
 /**
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     logout: function() {
-      axios.delete("http://localhost:5000/logout").then(() => {
+      axios.delete(apiUrl + "/logout").then(() => {
         this.$store.commit("setLoggedOut");
         this.$store.commit("setUsername", "");
         eraseCookie("username");

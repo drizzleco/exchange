@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     submit: function() {
-      post("register", {
+      post("/register", {
         username: this.username,
         email: this.email,
         password: this.password,

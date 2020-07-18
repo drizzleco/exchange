@@ -33,7 +33,7 @@ def load_user(user_id):
     return User.query.filter_by(id=user_id).first()
 
 
-@app.route("/register", methods=["POST"])
+@app.route("/api/register", methods=["POST"])
 def register():
     if not request.is_json:
         return jsonify({"message": "Missing JSON in request"}), 400
@@ -71,7 +71,7 @@ def register():
     return jsonify(message="Successfully registered!", user=user.to_dict()), 200
 
 
-@app.route("/login", methods=["POST"])
+@app.route("/api/login", methods=["POST"])
 def login():
     if not request.is_json:
         return jsonify({"message": "Missing JSON in request"}), 400
@@ -95,7 +95,7 @@ def login():
     return jsonify(message="Successfully logged in!", user=user.to_dict()), 200
 
 
-@app.route("/logout", methods=["DELETE"])
+@app.route("/api/logout", methods=["DELETE"])
 def logout():
     """Log user out"""
     logout_user()
@@ -110,13 +110,7 @@ def graphql_view():
     return login_required(view)
 
 
-app.add_url_rule("/graphql", view_func=graphql_view())
-
-
-@app.route("/", methods=["GET"])
-@login_required
-def home():
-    return jsonify(current_user.to_dict())
+app.add_url_rule("/api/graphql", view_func=graphql_view())
 
 
 if __name__ == "__main__":

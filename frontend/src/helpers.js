@@ -2,7 +2,8 @@ import axios from 'axios'
 import store from './store'
 import router from './router'
 
-const apiUrl = "http://localhost:5000/"
+// TODO: set up devServer for axios
+export const apiUrl = "/api"; // change this to http://localhost:5000/api for development
 
 /**
  * Redirects to home route if user is already logged in
@@ -14,7 +15,7 @@ export function redirectIfLoggedIn() {
 /**
  * Generic axios POST request
  * @param {string} path path to send request to
- * @param {Object} data data to send 
+ * @param {Object} data data to send
  * @returns {Promise}   axios Promise
  */
 export function post(path, data) {
@@ -31,7 +32,7 @@ export function post(path, data) {
  * @returns {Promise}   axios Promise
  */
 function graphql(query, vars = {}) {
-    return post("graphql", {
+    return post("/graphql", {
         query: query,
         variables: vars
     })
