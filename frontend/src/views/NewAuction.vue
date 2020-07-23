@@ -71,7 +71,9 @@ export default {
         this.message = "Please select an end date/time for your auction";
         return;
       }
-      let endTime = new Date(this.date + " " + this.time).toISOString();
+      let endTime = new Date(
+        this.date.replace(/-/g, "/") + " " + this.time
+      ).toISOString();
       let date = endTime.substring(0, 10);
       let time = endTime.substring(11, 16);
       createAuction(
