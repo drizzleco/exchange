@@ -1,5 +1,7 @@
 # exchange
 
+[![codecov](https://codecov.io/gh/drizzleco/exchange/branch/master/graph/badge.svg?token=D91AS5EED0)](https://codecov.io/gh/drizzleco/exchange)
+
 ## Requirements
 
 - Python 3
@@ -13,6 +15,7 @@
 2. `make start`
 
 ## Docker
+
 To run a local copy of the code, run the following
 
 ```bash
@@ -20,6 +23,7 @@ docker-compose up -d
 ```
 
 ## Heroku
+
 If you want to deploy with heroku and you have the CLI, the following steps are sufficient:
 
 ```

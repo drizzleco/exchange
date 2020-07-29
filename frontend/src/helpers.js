@@ -3,7 +3,7 @@ import store from './store'
 import router from './router'
 
 // TODO: set up devServer for axios
-export const apiUrl = "/api"; // change this to http://localhost:5000/api for development
+export const apiUrl = "http://localhost:5000/api"; // change this to http://localhost:5000/api for development
 
 /**
  * Redirects to home route if user is already logged in
