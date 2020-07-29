@@ -5,11 +5,11 @@ from flask_login import current_user
 from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyConnectionField, SQLAlchemyObjectType
 from graphql import GraphQLError
-from helpers import toDateObj
-from models import Auction as AuctionModel
-from models import Bid as BidModel
-from models import User as UserModel
-from models import db
+from backend.helpers import toDateObj
+from backend.models import Auction as AuctionModel
+from backend.models import Bid as BidModel
+from backend.models import User as UserModel
+from backend.models import db
 
 
 class User(SQLAlchemyObjectType):
