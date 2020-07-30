@@ -1,9 +1,7 @@
-from client import graphql_client, create_test_data
-
-create_test_data()
+from client import graphql_client
 
 
-def test_resolve_users():
+def test_resolve_users(graphql_client):
     executed = graphql_client.execute(
         """
         {
@@ -32,10 +30,7 @@ def test_resolve_users():
                         {
                             "name": "test auction",
                             "description": "test desc",
-                            "bids": [
-                                {"id": "1", "amount": 100.01},
-                                {"id": "2", "amount": 220.0},
-                            ],
+                            "bids": [{"id": "1", "amount": 100.01},],
                         }
                     ],
                 }
@@ -44,7 +39,7 @@ def test_resolve_users():
     }
 
 
-def test_resolve_auctions():
+def test_resolve_auctions(graphql_client):
     executed = graphql_client.execute(
         """
         {
@@ -71,17 +66,14 @@ def test_resolve_auctions():
                     "name": "test auction",
                     "startingPrice": 99.99,
                     "description": "test desc",
-                    "bids": [
-                        {"id": "1", "amount": 100.01},
-                        {"id": "2", "amount": 220.0},
-                    ],
+                    "bids": [{"id": "1", "amount": 100.01},],
                 }
             ]
         }
     }
 
 
-def test_resolve_bid():
+def test_resolve_bid(graphql_client):
     executed = graphql_client.execute(
         """
         {

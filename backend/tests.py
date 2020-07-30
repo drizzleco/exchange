@@ -8,7 +8,10 @@ with app.app_context():
     db.create_all()
 
     u1 = User(
-        username="test", email="test@gmail.com", created=datetime.datetime.utcnow(),
+        username="test",
+        email="test@gmail.com",
+        password="test",
+        created=datetime.datetime.utcnow(),
     )
     u1.set_password("test")
     a1 = Auction(
