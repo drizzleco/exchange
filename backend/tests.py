@@ -1,7 +1,7 @@
 import datetime
 
-from models import Auction, Bid, User, db
-from app import app
+from backend.app import app
+from backend.models import Auction, Bid, User, db
 
 with app.app_context():
     db.drop_all()

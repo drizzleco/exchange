@@ -5,6 +5,7 @@ from flask_login import current_user
 from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyConnectionField, SQLAlchemyObjectType
 from graphql import GraphQLError
+
 from backend.helpers import toDateObj
 from backend.models import Auction as AuctionModel
 from backend.models import Bid as BidModel

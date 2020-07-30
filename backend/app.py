@@ -1,6 +1,5 @@
 import datetime
 
-from backend.config import DEBUG, ORIGINS, Config
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_graphql import GraphQLView
@@ -12,6 +11,8 @@ from flask_login import (
     logout_user,
 )
 from flask_sqlalchemy import SQLAlchemy
+
+from backend.config import DEBUG, ORIGINS, Config
 from backend.models import Auction, Bid, User, db
 from backend.schema import schema
 
