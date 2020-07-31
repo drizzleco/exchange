@@ -13,7 +13,8 @@ install-backend:
 	#	 backend installation
 	python3 -m venv backend/.venv; \
 	. backend/.venv/bin/activate; \
-	pip3 install -r backend/requirements.txt
+	pip install -r backend/requirements.txt &&\
+	pip install -e .;
 
 ### install-frontend - install frontend requirements
 .PHONY: install-frontend
