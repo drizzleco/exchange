@@ -3,6 +3,7 @@ import datetime
 from backend.app import app
 from backend.models import Auction, Bid, User, db
 
+# import this script to populate db with below test data
 with app.app_context():
     db.drop_all()
     db.create_all()
